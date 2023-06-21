@@ -21,7 +21,7 @@ rm -rf $INSTALL_PATH
 
 # webgazer
 rm -f ./$DIST_PATH/webgazer.js
-git clone -b develop https://github.com/ffigari/WebGazer $INSTALL_PATH
+git clone -b develop https://github.com/agustin-penas/WebGazer $INSTALL_PATH
 
 (
   cd $INSTALL_PATH
