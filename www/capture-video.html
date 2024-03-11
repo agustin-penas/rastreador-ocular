@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>jsPsych Webcam Recording Experiment</title>
+
+<script src="https://unpkg.com/jspsych@7.3.0" type="text/javascript"></script>
+<link rel="stylesheet" href="https://unpkg.com/jspsych@7.1.2/css/jspsych.css">
+<script src="https://unpkg.com/@jspsych/plugin-survey-html-form@1.0.0"></script>
+<script src="https://unpkg.com/@jspsych/plugin-preload@1.1.0"></script>
+
+<script src="https://unpkg.com/@jspsych/plugin-html-video-response@1.0.2"></script>
+<script src="https://unpkg.com/@jspsych/plugin-html-keyboard-response@1.1.0"></script>
+<script src="https://unpkg.com/@jspsych/plugin-html-button-response@1.1.0"></script>
+<script src="https://unpkg.com/@jspsych/plugin-initialize-camera@1.0.2"></script>
+
+
+
+
+<style>
+    .stimulus {
+        position: absolute;
+        width: 50px;
+        height: 50px;
+        background-color: red;
+        border-radius: 50%;
+        cursor: pointer;
+    }
+</style>
+</head>
+<body>
+
+<div id="jspsych-target"></div>
+
+<script src="./capture-video.js">
+</script>
+
+</body>
+</html>
