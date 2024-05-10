@@ -3,6 +3,9 @@
   "version": "0.1.0",
   "type": "module",
   "dependencies": {
+    "14": "^3.1.6",
+    "@jspsych/extension-record-video": "^1.0.2",
+    "@tensorflow-models/face-landmarks-detection": "^1.0.2",
     "fs": "0.0.1-security",
     "webpack": "^5.64.4"
   }
