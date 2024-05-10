@@ -1,59 +1,70 @@
-    // Define locations for stimuli
-    var stimulusLocations = [
-      { x: 100, y: 100 },
-      { x: 300, y: 100 },
-      { x: 100, y: 300 },
-      { x: 300, y: 300 }
-  ];
   const jsPsych = initJsPsych({
     on_finish: function() {
       jsPsych.data.displayData();
       jsPsych.data.get().localSave(
         'csv',
-        `blink-experiment-${(new Date).toISOString()}.csv`
+        `capture-video-${(new Date).toISOString()}.csv`
       );
     },
-    //extensions: [{ type: jsPsychExtensionWebgazer }],
+    extensions: [
+      { type: jsPsychExtensionRecordVideo}
+    ]
   });
 
-
-  // Initialize jsPsych timeline
-  var timeline = [];
-
-  timeline.push({
+  const init_camera = {
     type: jsPsychInitializeCamera
-  });
+  };
 
-  // Add webcam recording trial
-  timeline.push({
-      type: jsPsychHtmlVideoResponse,
-      stimulus: '<div id="jspsych-html-video-response-stimulus" class="jspsych-html-video-response-stimulus" style="display: none;"></div>',
-      choices: ['space'],
-      prompt: "<p>Please click on the red circles while looking into the webcam.</p>",
-      save_video_url: true,
-      on_finish: function(data) {
-          //var response = JSON.parse(data.response);
-          //console.log("Video recorded:", response.filename);
-      }
-  });
-
-  // Add trials for clicking on stimuli
-  for (var i = 0; i < 4; i++) {
-      timeline.push({
-          type: jsPsychHtmlKeyboardResponse,
-          stimulus: '<div class="stimulus" id="stimulus' + i + '"></div>',
-          choices: "NO_KEYS",
-          trial_duration: 2000, // Time for each stimulus presentation
-          on_start: function(trial) {
-              var index = parseInt(trial.stimulus.substr(-1)); // Extract stimulus index from stimulus ID
-              var location = stimulusLocations[index];
-              trial.stimulus += '<style>#stimulus' + index + '{top:' + location.y + 'px;left:' + location.x + 'px;}</style>';
-          },
-          on_finish: function(data) {
-              console.log("Clicked stimulus:", data.stimulus.substr(-1));
+  const trial = {
+    type: jsPsychHtmlButtonResponse,
+    stimulus: `<div id="target" style="width:250px; height: 250px; background-color: #333; position: relative; margin: 2em auto;">
+        <div class="orbit" style="width:25px; height:25px; border-radius:25px;background-color: #f00; position: absolute; top:calc(50% - 12px); left:calc(50% - 12px);"></div>
+      </div>
+      <style>
+        .orbit {
+          transform: translateX(100px);
+          animation: orbit 4s infinite;
+        }
+        @keyframes orbit {
+          0% {
+            transform: rotate(0deg) translateX(100px);
           }
-      });
-  }
+          100% {
+            transform: rotate(360deg) translateX(100px);
+          }
+        }
+      </style>`,
+    choices: ['Done'],
+    prompt: "<p>Video is recording. Click done after a few seconds.</p>",
+    extensions: [
+      {type: jsPsychExtensionRecordVideo}
+    ]
+  };
+
+  const trialNoExt = {
+    type: jsPsychHtmlButtonResponse,
+    stimulus: `<div id="target" style="width:250px; height: 250px; background-color: #333; position: relative; margin: 2em auto;">
+        <div class="orbit" style="width:25px; height:25px; border-radius:25px;background-color: #f00; position: absolute; top:calc(50% - 12px); left:calc(50% - 12px);"></div>
+      </div>
+      <style>
+        .orbit {
+          transform: translateX(100px);
+          animation: orbit 4s infinite;
+        }
+        @keyframes orbit {
+          0% {
+            transform: rotate(0deg) translateX(100px);
+          }
+          100% {
+            transform: rotate(360deg) translateX(100px);
+          }
+        }
+      </style>`,
+    choices: ['Done'],
+    prompt: "<p>Video is recording. Click done after a few seconds.</p>",
+  };
+
+  const timeline = [init_camera, trialNoExt, trial, trialNoExt];
 
   // Start the experiment
 	jsPsych.run(timeline);

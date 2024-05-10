@@ -40,7 +40,7 @@ const jsPsych = initJsPsych({
 		rastocJSPsych.ensureCalibration({
 			performValidation: true,
 			forceCalibration: true,
-			maxRetries: 1,
+			maxRetries: 0,
 		})
   );
 
@@ -48,50 +48,93 @@ const jsPsych = initJsPsych({
     type: jsPsychHtmlButtonResponse,
     stimulus: `
     <p>
-			En el siguiente experimento debes mirar fijamente al punto rojo por 20 segundos <br>
-      Presioná <i>continuar</i> para iniciar el experimento.
+    In the next experiment you have to:<br>
+      1. Blink five times in quick succession.<br>
+      2. Wait 2 seconds.<br>
+      3. Blink five times in quick succession. <br>
+    You have 20 seconds, if finish early hit the spacebar<br>
+    Press <i>continue</i> to start experiment.<br>
     </p>
     `,
-    choices: ["continuar"],
+    choices: ["continue"],
   })
 
 	timeline.push({
 		type: jsPsychHtmlKeyboardResponse,
-		choices: "NO_KEYS",
+		choices: " ",
 		stimulus: dot_html,
 		extensions: [{ type: jsPsychExtensionWebgazer, params: { targets: [] } }, { type: jsPsychExtensionRecordVideo}],
 		trial_duration: 20000,
 	})
 
-	timeline.push({
+  timeline.push({
     type: jsPsychHtmlButtonResponse,
     stimulus: `
     <p>
-			En el siguiente experimento debes mirar fijamente al punto rojo, cuando este cambie a color verde debes pestañear. <br>
-      Presioná <i>continuar</i> para iniciar el experimento.
+    In the next experiment you have to:<br>
+      1. Blink five times in a row in a relaxed manner.<br>
+      2. Wait 2 seconds.<br>
+      3. Blink five times in a row in a relaxed manner. <br>
+    You have 20 seconds, if finish early hit the spacebar<br>
+    Press <i>continue</i> to start experiment.<br>
     </p>
     `,
-    choices: ["continuar"],
+    choices: ["continue"],
   })
 
-//Repetir 20 veces el green blink con 1 segundo entre cada uno.
-	for(let i=0 ; i<20 ; i++) {
 	timeline.push({
 		type: jsPsychHtmlKeyboardResponse,
-		choices: "NO_KEYS",
+		choices: " ",
 		stimulus: dot_html,
 		extensions: [{ type: jsPsychExtensionWebgazer, params: { targets: [] } }, { type: jsPsychExtensionRecordVideo}],
-		trial_duration: 1000,
+		trial_duration: 20000,
 	})
+
+  timeline.push({
+    type: jsPsychHtmlButtonResponse,
+    stimulus: `
+    <p>
+    In the next experiment you have to:<br>
+      1. Blink for 1 second.<br>
+      2. Wait 2 seconds.<br>
+      3. Blink for 1 second.  <br>
+    You have 20 seconds, if finish early hit the spacebar<br>
+    Press <i>continue</i> to start experiment.<br>
+    </p>
+    `,
+    choices: ["continue"],
+  })
 
 	timeline.push({
 		type: jsPsychHtmlKeyboardResponse,
-		choices: "NO_KEYS",
-		stimulus: dot_green_html,
+		choices: " ",
+		stimulus: dot_html,
 		extensions: [{ type: jsPsychExtensionWebgazer, params: { targets: [] } }, { type: jsPsychExtensionRecordVideo}],
-		trial_duration: 500,
+		trial_duration: 20000,
 	})
-}
+
+  timeline.push({
+    type: jsPsychHtmlButtonResponse,
+    stimulus: `
+    <p>
+    In the next experiment you have to:<br>
+      1. Look at the camera for 10 seconds.<br>
+      2. Look around without head motions for 10 seconds.<br>
+      3. Look around with head motions for 10 seconds.  <br>
+    You have 20 seconds, if finish early hit the spacebar<br>
+    Press <i>continue</i> to start experiment.<br>
+    </p>
+    `,
+    choices: ["continue"],
+  })
+
+	timeline.push({
+		type: jsPsychHtmlKeyboardResponse,
+		choices: " ",
+		stimulus: dot_html,
+		extensions: [{ type: jsPsychExtensionWebgazer, params: { targets: [] } }, { type: jsPsychExtensionRecordVideo}],
+		trial_duration: 20000,
+	})
 
 	timeline.push({
     type: jsPsychHtmlButtonResponse,

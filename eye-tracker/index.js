@@ -1,4 +1,5 @@
 import { Point, BBox, MultiBBox } from './lib/types/index.js';
+import getVideoFrames from "./lib/video/index.js";
 
 class EyesFeatures {
   constructor(bboxes) {
@@ -67,6 +68,12 @@ const state = {
   lastFrameEyesFeatures: null,
   calibrationIsNeeded: true,
   events: null,
+  //list of elements {frame: a, x: b, y: c} where a is a frame for calibration, (b,c)
+  framesForCalibration: [],
+  //object {from:x0, to:x1} where x0 and x1 are the frames from and to to predict
+  videoPredictionLapse: null,
+  videoFrameIndex: 0,
+  videoFramePredictionData: []
 };
 
 const mapCoordinateToGaze = ({ x, y }) => {
@@ -206,6 +213,69 @@ const stopTrackingEvents = () => {
   return events;
 };
 
+const setframesForCalibration = (frames) => {
+  console.log("setting frames to calibrate: " + frames)
+  console.log("where 2nd element is: " + frames[2].frame + " " + frames[2].x + " " + frames[2].y)
+  state.framesForCalibration = frames
+}
+
+const setPredictionLapse = (lapse) => {
+  console.log("setting lapse to predict from: " + lapse.from + ", to: " + lapse.to)
+  state.videoPredictionLapse = lapse
+}
+
+const resetVideoFrameData = () => {
+  state.videoFrameIndex = 0;
+  state.videoFramePredictionData = [];
+  state.videoPredictionLapse = null;
+  state.framesForCalibration = [];
+  state.calibrationIsNeeded = true;
+}
+
+const onFrameLoop = async (frame) => {
+  const index = state.videoFrameIndex;
+  const calibrationFrame = getCalibrationFrame(index);
+  console.log("index: " + index);
+  if ( calibrationFrame != undefined ) {
+    console.log("calibrationFrame: " + calibrationFrame.x);
+    await webgazer.eyePatchesForFrame(frame)
+    await webgazer.recordScreenPosition(calibrationFrame.x, calibrationFrame.y, 'click')
+  }
+  console.log("state.videoPredictionLapse.from" + state.videoPredictionLapse.from)
+  console.log("state.videoPredictionLapse.to" + state.videoPredictionLapse.to)
+
+  if (index > state.videoPredictionLapse.from && index < state.videoPredictionLapse.to) {
+    //si ya terminamos de calibrar y es empieza prediction lapse, calculamos regressionCoefficients
+    if(state.calibrationIsNeeded) {
+      await webgazer.computeRegressionCoefficients();
+      //calibracion terminada
+      state.calibrationIsNeeded = false;
+    }
+
+    console.log("entering eyePatchesForFrame")
+    await webgazer.eyePatchesForFrame(frame)
+    const gazeData = await webgazer.getCurrentPrediction()
+    var d = {
+      x: gazeData.x,
+      y: gazeData.y,
+      t: gazeData.t,
+      b: gazeData.isBlink,
+      f: frame,
+    };
+    state.videoFramePredictionData.push(d);
+  }
+  frame.close();
+  state.videoFrameIndex++;
+}
+
+const getCalibrationFrame = (index) => {
+  return state.framesForCalibration.find(calibrationFrame => calibrationFrame.frame == index);
+}
+
+const getVideoFramePredictionData = () => {
+  return state.videoFramePredictionData;
+}
+
 window.rastoc = {
   showGazeEstimation,
   hideGazeEstimation,
@@ -288,4 +358,20 @@ window.rastoc = {
   },
   startTrackingEvents,
   stopTrackingEvents,
+  startTrackingVideo(videoUrl, onFrameCall, onConfigCall) {
+    getVideoFrames({
+      videoUrl,
+      async onFrame(frame) {  // `frame` is a VideoFrame object: https://developer.mozilla.org/en-US/docs/Web/API/VideoFrame
+        //onFrameCall(frame);
+        await onFrameLoop(frame);
+      },
+      onConfig(config) {
+        onConfigCall(config);
+      },
+    });
+  },
+  setframesForCalibration,
+  setPredictionLapse,
+  resetVideoFrameData,
+  getVideoFramePredictionData
 };

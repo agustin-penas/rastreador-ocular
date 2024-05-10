@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+
+    <!-- WebGazer -->
+    <script src="./vendor/webgazer.js"></script>
+    <script src="./build/eye-tracker.js"></script>
+    <script src="./build/jspsych-interface.js"></script>
+
+    <title> Webgazer with imported video </title>
+  </head>
+  <body>
+    <p>---</p>
+    <p>Video</p>
+    <input type="text" id="fileInput">
+    <button id="uploadButton">upload</button>
+    <script src="./imported-video-encoded.js"></script>
+
+    <!--script>
+
+      document.getElementById("uploadButton").onclick = () => {
+        let fileElement = document.getElementById('fileInput')
+  
+        // check if user had selected a file
+        if (fileElement.files.length === 0) {
+          alert('please choose a file')
+          return
+        }
+  
+        let file = fileElement.files[0]
+        let videoUrl = URL.createObjectURL(file);
+
+        console.log("file loaded " + videoUrl)
+
+        URL.revokeObjectURL(file); // revoke URL to prevent memory leak
+
+      }
+  
+    </script -->
+    <p>---</p>
+    <canvas id="canvasEl"></canvas>
+
+    <p>---</p>
+
+  </body>
+</html>

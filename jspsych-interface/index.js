@@ -101,6 +101,7 @@ const calibrate = {
     }
 
     let calibrationPointsCount, calibrationStimulusCoordinates;
+    let centerCoordinates;
     let mapCoordinateToGaze;
     return {
       on_timeline_start() {
@@ -175,6 +176,7 @@ const calibrate = {
                   console.error(e)
                   throw new Error("Failed to store center coordinate of canvas");
                 }
+                centerCoordinates = center;
                 const fn = ({ key }) => {
                   if (key !== ' ') {
                     return;
@@ -204,15 +206,25 @@ const calibrate = {
           response_type: 'key',
           response_start_time: 550,
           choices: [' '],
+          extensions: [{ type: jsPsychExtensionRecordVideo }],
           on_start() {
             document.body.style.cursor = "none";
           },
           on_finish(data) {
             document.body.style.cursor = "auto";
             data["rastoc-type"] = "calibration-stimulus";
+            const {
+              x,
+              y,
+            } = calibrationStimulusCoordinates[calibrationPointsCount];
+            let trueCoord = centerCoordinates.add(x, y);
             data["stimulus-coordinate"] = {
               x: calibrationStimulusCoordinates[calibrationPointsCount].x,
               y: calibrationStimulusCoordinates[calibrationPointsCount].y,
+            };
+            data["absolute-stimulus-coordinate"] = {
+              x: trueCoord.x,
+              y: trueCoord.y,
             };
             data["calibration-id"] = calibrationId
             data["calibration-point-id"] = calibrationPointsCount;
@@ -351,7 +363,7 @@ const validateCalibration = () => {
         response_type: 'key',
         response_start_time: responseStartTimeInMs,
         choices: [' '],
-        extensions: [{ type: jsPsychExtensionWebgazer, params: { targets: [] } }],
+        extensions: [{ type: jsPsychExtensionWebgazer, params: { targets: [] } }, { type: jsPsychExtensionRecordVideo}],
         on_finish(data) {
           data["rastoc-type"] = "validation-stimulus";
           data["stimulus-coordinate"] = {
