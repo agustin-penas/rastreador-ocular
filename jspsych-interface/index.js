@@ -206,7 +206,6 @@ const calibrate = {
           response_type: 'key',
           response_start_time: 550,
           choices: [' '],
-          extensions: [{ type: jsPsychExtensionRecordVideo }],
           on_start() {
             document.body.style.cursor = "none";
           },
@@ -363,7 +362,7 @@ const validateCalibration = () => {
         response_type: 'key',
         response_start_time: responseStartTimeInMs,
         choices: [' '],
-        extensions: [{ type: jsPsychExtensionWebgazer, params: { targets: [] } }, { type: jsPsychExtensionRecordVideo}],
+        extensions: [{ type: jsPsychExtensionWebgazer, params: { targets: [] } }],
         on_finish(data) {
           data["rastoc-type"] = "validation-stimulus";
           data["stimulus-coordinate"] = {

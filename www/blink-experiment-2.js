@@ -3,10 +3,10 @@ const jsPsych = initJsPsych({
 		jsPsych.data.displayData();
     jsPsych.data.get().localSave(
       'csv',
-      `blink-experiment-${(new Date).toISOString()}.csv`
+      `blink-experiment-expose-points${(new Date).toISOString()}.csv`
     );
   },
-  extensions: [{ type: jsPsychExtensionWebgazer }, { type: jsPsychExtensionRecordVideo }],
+  extensions: [{ type: jsPsychExtensionWebgazer }],
 });
  
  // Define the experiment timeline
@@ -63,7 +63,7 @@ const jsPsych = initJsPsych({
 		type: jsPsychHtmlKeyboardResponse,
 		choices: " ",
 		stimulus: dot_html,
-		extensions: [{ type: jsPsychExtensionWebgazer, params: { targets: [] } }, { type: jsPsychExtensionRecordVideo}],
+		extensions: [{ type: jsPsychExtensionWebgazer, params: { targets: [] } }],
 		trial_duration: 20000,
 	})
 
@@ -86,7 +86,7 @@ const jsPsych = initJsPsych({
 		type: jsPsychHtmlKeyboardResponse,
 		choices: " ",
 		stimulus: dot_html,
-		extensions: [{ type: jsPsychExtensionWebgazer, params: { targets: [] } }, { type: jsPsychExtensionRecordVideo}],
+		extensions: [{ type: jsPsychExtensionWebgazer, params: { targets: [] } }],
 		trial_duration: 20000,
 	})
 
@@ -109,7 +109,7 @@ const jsPsych = initJsPsych({
 		type: jsPsychHtmlKeyboardResponse,
 		choices: " ",
 		stimulus: dot_html,
-		extensions: [{ type: jsPsychExtensionWebgazer, params: { targets: [] } }, { type: jsPsychExtensionRecordVideo}],
+		extensions: [{ type: jsPsychExtensionWebgazer, params: { targets: [] } }],
 		trial_duration: 20000,
 	})
 
@@ -132,7 +132,7 @@ const jsPsych = initJsPsych({
 		type: jsPsychHtmlKeyboardResponse,
 		choices: " ",
 		stimulus: dot_html,
-		extensions: [{ type: jsPsychExtensionWebgazer, params: { targets: [] } }, { type: jsPsychExtensionRecordVideo}],
+		extensions: [{ type: jsPsychExtensionWebgazer, params: { targets: [] } }],
 		trial_duration: 32000,
 	})
 
