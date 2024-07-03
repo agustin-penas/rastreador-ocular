@@ -1,4 +1,4 @@
-
+//ESTO YA NO SIRVE
 document.getElementById("uploadButton").onclick = async () => {
   let fileElement = document.getElementById('fileInput')
   //console.log(fileElement.value);

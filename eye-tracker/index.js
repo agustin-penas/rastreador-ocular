@@ -70,10 +70,12 @@ const state = {
   events: null,
   //list of elements {frame: a, x: b, y: c} where a is a frame for calibration, (b,c)
   framesForCalibration: [],
+  pointForCalibration: { x:0, y:0},
   //object {from:x0, to:x1} where x0 and x1 are the frames from and to to predict
   videoPredictionLapse: null,
   videoFrameIndex: 0,
-  videoFramePredictionData: []
+  videoFramePredictionData: [],
+  videoFrameCount: 0
 };
 
 const mapCoordinateToGaze = ({ x, y }) => {
@@ -213,6 +215,10 @@ const stopTrackingEvents = () => {
   return events;
 };
 
+const setPointForCalibration = (point) => {
+  state.pointForCalibration = point
+}
+
 const setframesForCalibration = (frames) => {
   console.log("setting frames to calibrate: " + frames)
   console.log("where 2nd element is: " + frames[2].frame + " " + frames[2].x + " " + frames[2].y)
@@ -226,25 +232,37 @@ const setPredictionLapse = (lapse) => {
 
 const resetVideoFrameData = () => {
   state.videoFrameIndex = 0;
-  state.videoFramePredictionData = [];
   state.videoPredictionLapse = null;
   state.framesForCalibration = [];
   state.calibrationIsNeeded = true;
 }
 
-const onFrameLoop = async (frame) => {
+const resetVideoFramePredictionData = () => {
+  state.videoFramePredictionData = [];
+}
+
+const onFrameCalibrationLoop = async (frame) => {
   const index = state.videoFrameIndex;
   const calibrationFrame = getCalibrationFrame(index);
   console.log("index: " + index);
   if ( calibrationFrame != undefined ) {
-    console.log("calibrationFrame: " + calibrationFrame.x);
+    console.log("calibrationFrame: " + state.pointForCalibration.y);
+    state.calibrationIsNeeded = true;
     await webgazer.eyePatchesForFrame(frame)
-    await webgazer.recordScreenPosition(calibrationFrame.x, calibrationFrame.y, 'click')
+    await webgazer.recordScreenPosition(state.pointForCalibration.x, state.pointForCalibration.y, 'click')
   }
+
+  frame.close();
+  state.videoFrameIndex++;
+}
+
+const onFramePredictionLoop = async (frame) => {
+  const index = state.videoFrameIndex;
+
   console.log("state.videoPredictionLapse.from" + state.videoPredictionLapse.from)
   console.log("state.videoPredictionLapse.to" + state.videoPredictionLapse.to)
 
-  if (index > state.videoPredictionLapse.from && index < state.videoPredictionLapse.to) {
+  if (index >= state.videoPredictionLapse.from && index < state.videoPredictionLapse.to) {
     //si ya terminamos de calibrar y es empieza prediction lapse, calculamos regressionCoefficients
     if(state.calibrationIsNeeded) {
       await webgazer.computeRegressionCoefficients();
@@ -256,11 +274,14 @@ const onFrameLoop = async (frame) => {
     await webgazer.eyePatchesForFrame(frame)
     const gazeData = await webgazer.getCurrentPrediction()
     var d = {
-      x: gazeData.x,
-      y: gazeData.y,
-      t: gazeData.t,
-      b: gazeData.isBlink,
-      f: frame,
+      x: Math.round(gazeData.x),
+      y: Math.round(gazeData.y),
+      t: 0,
+      b: gazeData.eyeFeatures.isBlink,
+      oLR: gazeData.eyeFeatures.outOfPlaneLR,
+      oTB: gazeData.eyeFeatures.outOfPlaneTB,
+      dz: gazeData.eyeFeatures.distanceToCamera,
+      f: index,
     };
     state.videoFramePredictionData.push(d);
   }
@@ -358,20 +379,56 @@ window.rastoc = {
   },
   startTrackingEvents,
   stopTrackingEvents,
-  startTrackingVideo(videoUrl, onFrameCall, onConfigCall) {
+  startTrackingVideoCalibration(videoUrl, onFrameCall, onConfigCall) {
+    state.videoFrameIndex = 0;
     getVideoFrames({
       videoUrl,
       async onFrame(frame) {  // `frame` is a VideoFrame object: https://developer.mozilla.org/en-US/docs/Web/API/VideoFrame
         //onFrameCall(frame);
-        await onFrameLoop(frame);
+        await onFrameCalibrationLoop(frame);
       },
       onConfig(config) {
         onConfigCall(config);
       },
     });
   },
+  startTrackingVideoPrediction(videoUrl, onFrameCall, onConfigCall) {
+    state.videoFrameIndex = 0;
+    getVideoFrames({
+      videoUrl,
+      async onFrame(frame) {  // `frame` is a VideoFrame object: https://developer.mozilla.org/en-US/docs/Web/API/VideoFrame
+        //onFrameCall(frame);
+        await onFramePredictionLoop(frame);
+      },
+      onConfig(config) {
+        onConfigCall(config);
+      },
+    });
+  },
+  clearFrameCount() {
+    state.videoFrameCount=0;
+  },
+  async calcVideoFrameCount(videoUrl) {
+   await getVideoFrames({
+      videoUrl,
+      onFrame(frame) {  // `frame` is a VideoFrame object: https://developer.mozilla.org/en-US/docs/Web/API/VideoFrame
+        //onFrameCall(frame);
+       state.videoFrameCount++
+       console.log("llevamos: "+ state.videoFrameCount + " frames")
+       frame.close();
+      },
+      onConfig(config) {
+        
+      },
+    });
+  },
+  getVideoFrameCount(){
+    return state.videoFrameCount;
+  },
   setframesForCalibration,
+  setPointForCalibration,
   setPredictionLapse,
   resetVideoFrameData,
+  resetVideoFramePredictionData,
   getVideoFramePredictionData
 };

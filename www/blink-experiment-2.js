@@ -133,7 +133,7 @@ const jsPsych = initJsPsych({
 		choices: " ",
 		stimulus: dot_html,
 		extensions: [{ type: jsPsychExtensionWebgazer, params: { targets: [] } }, { type: jsPsychExtensionRecordVideo}],
-		trial_duration: 20000,
+		trial_duration: 32000,
 	})
 
 	timeline.push({
