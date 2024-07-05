@@ -493,7 +493,8 @@ const ensureCalibration = (options) => {
         return false;
       }
 
-      return !rastoc.isCorrectlyCalibrated || options.forceCalibration;
+      //return !rastoc.isCorrectlyCalibrated || options.forceCalibration;
+      return false;
     },
     on_timeline_start() {
       calibrationsCounts = 0;
