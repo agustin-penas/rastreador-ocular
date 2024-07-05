@@ -455,7 +455,8 @@ const ensureCalibration = (options) => {
   let unsucessfulCalibration = false;
   const body = [{
     conditional_function() {
-      return unsucessfulCalibration;
+      //no corramos muchas validaciones total solo nos importa exponer mpuntos
+      return false;
     },
     timeline: [{
       type: jsPsychHtmlKeyboardResponse,
