@@ -3,7 +3,7 @@ const jsPsych = initJsPsych({
 		jsPsych.data.displayData();
     jsPsych.data.get().localSave(
       'csv',
-      `blink-experiment-expose-points${(new Date).toISOString()}.csv`
+      `rotation-experiment-expose-points${(new Date).toISOString()}.csv`
     );
   },
   extensions: [{ type: jsPsychExtensionWebgazer }],
@@ -24,9 +24,7 @@ const jsPsych = initJsPsych({
   var dot_html = '<div style="width:50px;height:50px;border-radius:50%;background-color:' + dot_color + ';"></div>';
   var dot_green_html = '<div style="width:50px;height:50px;border-radius:50%;background-color:' + dot_blink_color + ';"></div>';
   
-  /*timeline.push({
-    type: jsPsychInitializeCamera
-  });*/
+
 	timeline.push({
     type: jsPsychWebgazerInitCamera
   });
@@ -36,27 +34,19 @@ const jsPsych = initJsPsych({
 	timeline.push({
     type: jsPsychFullscreen
 	});
-	timeline.push(
+	/*timeline.push(
 		rastocJSPsych.ensureCalibration({
 			performValidation: true,
 			forceCalibration: true,
 			maxRetries: 0,
 		})
-  );
+  );*/
 
 	timeline.push({
-    type: jsPsychHtmlButtonResponse,
-    stimulus: `
-    <p>
-    In the next experiment you have to:<br>
-      1. Blink five times in quick succession.<br>
-      2. Wait 2 seconds.<br>
-      3. Blink five times in quick succession. <br>
-    You have 20 seconds, if finish early hit the spacebar<br>
-    Press <i>continue</i> to start experiment.<br>
-    </p>
-    `,
-    choices: ["continue"],
+    type: jsPsychVideoButtonResponse,
+    stimulus: ['video/derecha_hombro.mp4'],
+    choices: ["continuar"],
+    prompt: "<p>Luego de apretar el boton continuar gire la cabeza hacia su hombro derecho como muestra el video.</p>",
   })
 
 	timeline.push({
@@ -67,19 +57,11 @@ const jsPsych = initJsPsych({
 		trial_duration: 20000,
 	})
 
-  timeline.push({
-    type: jsPsychHtmlButtonResponse,
-    stimulus: `
-    <p>
-    In the next experiment you have to:<br>
-      1. Blink five times in a row in a relaxed manner.<br>
-      2. Wait 2 seconds.<br>
-      3. Blink five times in a row in a relaxed manner. <br>
-    You have 20 seconds, if finish early hit the spacebar<br>
-    Press <i>continue</i> to start experiment.<br>
-    </p>
-    `,
-    choices: ["continue"],
+	timeline.push({
+    type: jsPsychVideoButtonResponse,
+    stimulus: ['video/derecha.mp4'],
+    choices: ["continuar"],
+    prompt: "<p>Luego de apretar el boton continuar gire la cabeza hacia la derecha como muestra el video.</p>",
   })
 
 	timeline.push({
@@ -90,19 +72,11 @@ const jsPsych = initJsPsych({
 		trial_duration: 20000,
 	})
 
-  timeline.push({
-    type: jsPsychHtmlButtonResponse,
-    stimulus: `
-    <p>
-    In the next experiment you have to:<br>
-      1. Blink for 1 second.<br>
-      2. Wait 2 seconds.<br>
-      3. Blink for 1 second.  <br>
-    You have 20 seconds, if finish early hit the spacebar<br>
-    Press <i>continue</i> to start experiment.<br>
-    </p>
-    `,
-    choices: ["continue"],
+	timeline.push({
+    type: jsPsychVideoButtonResponse,
+    stimulus: ['video/izquierda_hombro.mp4'],
+    choices: ["continuar"],
+    prompt: "<p>Luego de apretar el boton continuar gire la cabeza hacia el hombro izquierdo como muestra el video.</p>",
   })
 
 	timeline.push({
@@ -113,19 +87,11 @@ const jsPsych = initJsPsych({
 		trial_duration: 20000,
 	})
 
-  timeline.push({
-    type: jsPsychHtmlButtonResponse,
-    stimulus: `
-    <p>
-    In the next experiment you have to:<br>
-      1. Look at the camera for 10 seconds.<br>
-      2. Look around without head motions for 10 seconds.<br>
-      3. Look around with head motions for 10 seconds.  <br>
-    You have 20 seconds, if finish early hit the spacebar<br>
-    Press <i>continue</i> to start experiment.<br>
-    </p>
-    `,
-    choices: ["continue"],
+	timeline.push({
+    type: jsPsychVideoButtonResponse,
+    stimulus: ['video/izquierda.mp4'],
+    choices: ["continuar"],
+    prompt: "<p>Luego de apretar el boton continuar gire la cabeza hacia la izquierda como muestra el video.</p>",
   })
 
 	timeline.push({
@@ -133,7 +99,7 @@ const jsPsych = initJsPsych({
 		choices: " ",
 		stimulus: dot_html,
 		extensions: [{ type: jsPsychExtensionWebgazer, params: { targets: [] } }],
-		trial_duration: 32000,
+		trial_duration: 20000,
 	})
 
 	timeline.push({
