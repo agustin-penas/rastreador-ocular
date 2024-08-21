@@ -44,7 +44,8 @@ timeline.push({
 timeline.push({
   type: jsPsychVirtualChinrest,
   blindspot_reps: 3,
-  resize_units: "none"
+  resize_units: "none",
+  extensions: [{ type: jsPsychExtensionWebgazer, params: { targets: [] } }],
 });
 
 timeline.push({
