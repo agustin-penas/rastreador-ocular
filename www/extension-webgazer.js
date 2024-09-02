@@ -193,11 +193,9 @@ var jsPsychExtensionWebgazer = (function () {
             x: this.round_predictions ? Math.round(gazeData.x) : gazeData.x,
             y: this.round_predictions ? Math.round(gazeData.y) : gazeData.y,
             t: gazeData.t,
-            b: gazeData.eyeFeatures.isBlink,
-            importantKeypoints: gazeData.eyeFeatures.importantKeypoints,
-            leftEye: gazeData.eyeFeatures.left.patch,
-            rightEye: gazeData.eyeFeatures.right.patch,
-            dz: gazeData.eyeFeatures.right.distanceToCamera,
+            b: gazeData.eyeFeatures.left.isBlink,
+            oop: gazeData.eyeFeatures.left.outOfPlane,
+            dz: gazeData.eyeFeatures.left.distanceToCamera,
           };
           //console.log(gazeData)
           if (this.activeTrial) {
