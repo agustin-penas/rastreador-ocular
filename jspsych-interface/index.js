@@ -12,7 +12,7 @@ const getPsychophysicsCanvasCenter = () => {
   }
   const { left, top } = psychophysicsCanvas.getBoundingClientRect();
   const { width, height } = psychophysicsCanvas;
-  
+
   // And this assumes the canvas has not been scaled
   const x = Math.round(left + (width / 2));
   const y = Math.round(top + (height / 2));
@@ -95,9 +95,8 @@ let calibrationId = 0
 const calibrate = {
   assistedly: (calibrationType) => {
     if (!["middleStrip", "fullscreen"]) {
-      throw new Error(`Unrecognized calibrationType=${
-        options.calibrationType
-      }`);
+      throw new Error(`Unrecognized calibrationType=${options.calibrationType
+        }`);
     }
 
     let calibrationPointsCount, calibrationStimulusCoordinates;
@@ -456,7 +455,7 @@ const ensureCalibration = (options) => {
   const body = [{
     conditional_function() {
       //no corramos muchas validaciones total solo nos importa exponer mpuntos
-      return false;
+      return unsucessfulCalibration;
     },
     timeline: [{
       type: jsPsychHtmlKeyboardResponse,
@@ -493,8 +492,8 @@ const ensureCalibration = (options) => {
         return false;
       }
 
-      //return !rastoc.isCorrectlyCalibrated || options.forceCalibration;
-      return false;
+      return !rastoc.isCorrectlyCalibrated || options.forceCalibration;
+      //return false;
     },
     on_timeline_start() {
       calibrationsCounts = 0;
