@@ -195,6 +195,8 @@ var jsPsychExtensionWebgazer = (function () {
             t: gazeData.t,
             b: gazeData.eyeFeatures.isBlink,
             importantKeypoints: gazeData.eyeFeatures.importantKeypoints,
+            leftEye: gazeData.eyeFeatures.left.patch,
+            rightEye: gazeData.eyeFeatures.right.patch,
             dz: gazeData.eyeFeatures.right.distanceToCamera,
           };
           //console.log(gazeData)
