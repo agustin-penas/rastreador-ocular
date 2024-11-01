@@ -71,7 +71,7 @@ timeline.push({
   type: jsPsychHtmlKeyboardResponse,
   stimulus: `
     <p>
-    En el proximo experimento usted debe:<br>
+    En el proximo experimento por favor fijá la mirada en el círculo y luego realizá las siguientes acciones:<br>
       1. Pestañear 5 veces rapido.<br>
       2. Esperar 2 segundos.<br>
       3. Pestañear 5 veces rapido. <br>
@@ -96,7 +96,7 @@ timeline.push({
   type: jsPsychHtmlKeyboardResponse,
   stimulus: `
     <p>
-    En el proximo experimento usted debe:<br>
+    En el proximo experimento por favor fijá la mirada en el círculo y luego realizá las siguientes acciones:<br>
       1. Pestañear 5 veces de manera relajada.<br>
       2. Esperar 2 segundos.<br>
       3. Pestañear 5 veces de manera relajada.<br>
@@ -119,7 +119,7 @@ timeline.push({
   type: jsPsychHtmlKeyboardResponse,
   stimulus: `
     <p>
-    En el proximo experimento usted debe:<br>
+    En el proximo experimento por favor fijá la mirada en el círculo y luego realizá las siguientes acciones:<br>
       1. Cierre los ojos por 2 segundo.<br>
       2. Esperar 4 segundos.<br>
       3. Cierre los ojos por 2 segundo.<br>
@@ -142,8 +142,29 @@ timeline.push({
   type: jsPsychHtmlKeyboardResponse,
   stimulus: `
     <p>
-    En el proximo experimento usted debe:<br>
-      1. Mirar fijamente a la camara pestañeando 10 veces.<br>
+    En el proximo experimento por favor realizá las siguientes acciones:<br>
+      1. Mirar fijamente al círculo pestañeando 10 veces.<br>
+    Tiene 20 segundos, si termina antes puede apretar la tecla <i>espacio</i>.<br>
+    Presione la tecla <i>espacio</i> para iniciar el experimento.<br>
+    </p>
+    `,
+  choices: [" "],
+})
+
+timeline.push({
+  type: jsPsychHtmlKeyboardResponse,
+  choices: [" "],
+  stimulus: dot_html,
+  extensions: [{ type: jsPsychExtensionWebgazer, params: { targets: [] } }],
+  trial_duration: trialDuration,
+})
+
+timeline.push({
+  type: jsPsychHtmlKeyboardResponse,
+  stimulus: `
+    <p>
+    En el proximo experimento realizá las siguientes acciones:<br>
+      1. Mueva la mirada por toda la pantalla SIN MOVER LA CABEZA pestañeando 10 veces.<br>
     Tiene 20 segundos, si termina antes puede apretar la tecla <i>espacio</i>.<br>
     Presione la tecla <i>espacio</i> para iniciar el experimento.<br>
     </p>
@@ -164,7 +185,7 @@ timeline.push({
   stimulus: `
     <p>
     En el proximo experimento usted debe:<br>
-      1. Mueva la mirada por toda la pantalla sin movimientos de cabeza pestañeando 10 veces.<br>
+      1. Mueva la mirada por toda la pantalla MOVIENDO LA CABEZA y además pestañeando 10 veces.  <br>
     Tiene 20 segundos, si termina antes puede apretar la tecla <i>espacio</i>.<br>
     Presione la tecla <i>espacio</i> para iniciar el experimento.<br>
     </p>
@@ -184,33 +205,12 @@ timeline.push({
   type: jsPsychHtmlKeyboardResponse,
   stimulus: `
     <p>
-    En el proximo experimento usted debe:<br>
-      1. Mueva la mirada por toda la pantalla con movimientos de la cabeza pestañeando 10 veces.  <br>
-    Tiene 20 segundos, si termina antes puede apretar la tecla <i>espacio</i>.<br>
-    Presione la tecla <i>espacio</i> para iniciar el experimento.<br>
-    </p>
-    `,
-  choices: [" "],
-})
-
-timeline.push({
-  type: jsPsychHtmlKeyboardResponse,
-  choices: [" "],
-  stimulus: dot_html,
-  extensions: [{ type: jsPsychExtensionWebgazer, params: { targets: [] } }],
-  trial_duration: trialDuration,
-})
-
-timeline.push({
-  type: jsPsychHtmlKeyboardResponse,
-  stimulus: `
-    <p>
-      Fin del experimento. Presione <i>finalizar</i> y espere unos segundos a
+      Fin del experimento. Presione la tecla <i>espacio</i> y espere unos segundos a
       que la pantalla quede en blanco. Luego podra cerrar la pestaña. <br>
       Muchas gracias por participar c:
     </p>
     `,
-  choices: ["finalizar"],
+  choices: [" "],
 })
 timeline.push({ type: rastocJSPsych.EventsTrackingStop });
 
