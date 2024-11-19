@@ -28,13 +28,42 @@ var dot_green_html = '<div style="width:50px;height:50px;border-radius:50%;backg
   type: jsPsychInitializeCamera
 });*/
 timeline.push({
-  type: jsPsychWebgazerInitCamera
+  type: jsPsychWebgazerInitCamera,
+  instructions: `
+  <div style="left: calc(50% - 400px); width:800px;">
+    <p>
+      Corregí la posición de la webcam para que se alinie con tus ojos y estos
+      queden bien enfocados. Tu cabeza debería quedar en el centro del
+      recuadro que aparece acá arriba.
+      <br>
+      Itentá que tus ojos se distingan correctamente. Si tenés luces atrás
+      tuyo probá apagarlas.
+    </p>
+    <p>
+      Cuando el recuadro se pinte de verde podés hacer click en
+      <i>"continuar"</i>.
+    </p>
+  </div>
+  `,
+  button_text: "continuar",
 });
 timeline.push({
   type: rastocJSPsych.EventsTrackingStart
 });
 timeline.push({
-  type: jsPsychFullscreen
+  type: jsPsychFullscreen,
+  message: `
+  <div style="left: calc(50% - 400px); width:800px;">
+    <h2>Intro</h2>
+    <p>
+      Para evitar distracciones te pedimos también que en la medida de lo
+      posible durante la duración del experimento cierres aplicaciones que
+      generen notificaciones y pongas el teléfono en modo no molestar.
+      <br>
+      Además vamos a cambiar a pantalla completa.
+    </p>
+  </div>`,
+  button_label: "continuar",
 });
 timeline.push({
   type: jsPsychVirtualChinrest,
