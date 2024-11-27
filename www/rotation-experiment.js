@@ -70,7 +70,7 @@ timeline.push({
     maxRetries: 0,
   })
 );*/
-timeline.push({
+/*timeline.push({
   type: jsPsychVirtualChinrest,
   blindspot_reps: 3,
   viewing_distance_report: "Según tus respuestas, estás sentado aproximadamente a <span id='distance-estimate' style='font-weight: bold;'></span> de la pantalla. ¿Te parece correcto?",
@@ -82,124 +82,124 @@ timeline.push({
   adjustment_prompt: "Haz clic y arrastra la esquina inferior derecha de la imagen hasta que sea del mismo tamaño que una tarjeta de crédito sostenida frente a la pantalla. Puedes usar cualquier tarjeta que tenga el mismo tamaño que una tarjeta de crédito, como una tarjeta de membresía o una licencia de conducir. Si no tienes acceso a una tarjeta real, puedes usar una regla para medir el ancho de la imagen a 3.37 pulgadas o 85.6 mm.",
   resize_units: "none",
   extensions: [{ type: jsPsychExtensionWebgazer, params: { targets: [] } }],
-});
+});*/
 
 timeline.push({
-  type: jsPsychVideoButtonResponse,
+  type: jsPsychVideoKeyboardResponse,
   stimulus: ['video/derecha_hombro.mp4'],
-  choices: ["continuar"],
-  prompt: "<p>Luego de apretar el boton <i>continuar</i> gire la cabeza hacia su hombro derecho como muestra el video.</p>",
+  choices: [" "],
+  prompt: "<p>Luego de apretar la tecla <i>espacio</i> gire la cabeza hacia su hombro derecho como muestra el video.</p>",
 })
 
 timeline.push({
-  type: jsPsychHtmlButtonResponse,
-  choices: ["continuar"],
-  stimulus: " ",
+  type: jsPsychHtmlKeyboardResponse,
+  choices: [" "],
+  stimulus: "Luego de girar la cabeza, presione espacio para continuar",
   extensions: [{ type: jsPsychExtensionWebgazer, params: { targets: [] } }],
   trial_duration: 20000,
 })
 
 timeline.push({
-  type: jsPsychVideoButtonResponse,
+  type: jsPsychVideoKeyboardResponse,
   stimulus: ['video/derecha.mp4'],
-  choices: ["continuar"],
-  prompt: "<p>Luego de apretar el boton <i>continuar</i> gire la cabeza hacia la derecha, a medio camino entre mirar hacia el frente y hacia el hombro, como muestra el video.</p>",
+  choices: [" "],
+  prompt: "<p>Luego de apretar la tecla <i>espacio</i> gire la cabeza hacia la derecha, a medio camino entre mirar hacia el frente y hacia el hombro, como muestra el video.</p>",
 })
 
 timeline.push({
-  type: jsPsychHtmlButtonResponse,
-  choices: ["continuar"],
-  stimulus: " ",
+  type: jsPsychHtmlKeyboardResponse,
+  choices: [" "],
+  stimulus: "Luego de girar la cabeza, presione espacio para continuar",
   extensions: [{ type: jsPsychExtensionWebgazer, params: { targets: [] } }],
   trial_duration: 20000,
 })
 
 timeline.push({
-  type: jsPsychVideoButtonResponse,
+  type: jsPsychVideoKeyboardResponse,
   stimulus: ['video/izquierda_hombro.mp4'],
-  choices: ["continuar"],
-  prompt: "<p>Luego de apretar el boton <i>continuar</i> gire la cabeza hacia el hombro izquierdo como muestra el video.</p>",
+  choices: [" "],
+  prompt: "<p>Luego de apretar la tecla <i>espacio</i> gire la cabeza hacia el hombro izquierdo como muestra el video.</p>",
 })
 
 timeline.push({
-  type: jsPsychHtmlButtonResponse,
-  choices: ["continuar"],
-  stimulus: " ",
+  type: jsPsychHtmlKeyboardResponse,
+  choices: [" "],
+  stimulus: "Luego de girar la cabeza, presione espacio para continuar",
   extensions: [{ type: jsPsychExtensionWebgazer, params: { targets: [] } }],
   trial_duration: 20000,
 })
 
 timeline.push({
-  type: jsPsychVideoButtonResponse,
+  type: jsPsychVideoKeyboardResponse,
   stimulus: ['video/izquierda.mp4'],
-  choices: ["continuar"],
-  prompt: "<p>Luego de apretar el boton <i>continuar</i> gire la cabeza hacia la izquierda, a medio camino entre mirar hacia el frente y hacia el hombro, como muestra el video.</p>",
+  choices: [" "],
+  prompt: "<p>Luego de apretar la tecla <i>espacio</i> gire la cabeza hacia la izquierda, a medio camino entre mirar hacia el frente y hacia el hombro, como muestra el video.</p>",
 })
 
 timeline.push({
-  type: jsPsychHtmlButtonResponse,
-  choices: ["continuar"],
-  stimulus: " ",
+  type: jsPsychHtmlKeyboardResponse,
+  choices: [" "],
+  stimulus: "Luego de girar la cabeza, presione espacio para continuar",
   extensions: [{ type: jsPsychExtensionWebgazer, params: { targets: [] } }],
   trial_duration: 20000,
 })
 
 timeline.push({
-  type: jsPsychVideoButtonResponse,
+  type: jsPsychVideoKeyboardResponse,
   stimulus: ['video/arriba.mp4'],
-  choices: ["continuar"],
-  prompt: "<p>Luego de apretar el boton <i>continuar</i> gire la cabeza mirando al techo como muestra el video.</p>",
+  choices: [" "],
+  prompt: "<p>Luego de apretar la tecla <i>espacio</i> gire la cabeza mirando al techo como muestra el video.</p>",
 })
 
 timeline.push({
-  type: jsPsychHtmlButtonResponse,
-  choices: ["continuar"],
-  stimulus: " ",
+  type: jsPsychHtmlKeyboardResponse,
+  choices: [" "],
+  stimulus: "Luego de girar la cabeza, presione espacio para continuar",
   extensions: [{ type: jsPsychExtensionWebgazer, params: { targets: [] } }],
   trial_duration: 20000,
 })
 
 timeline.push({
-  type: jsPsychVideoButtonResponse,
+  type: jsPsychVideoKeyboardResponse,
   stimulus: ['video/arriba2.mp4'],
-  choices: ["continuar"],
-  prompt: "<p>Luego de apretar el boton <i>continuar</i> gire la cabeza, fijando la mirada por encima del monitor, como muestra el video.</p>",
+  choices: [" "],
+  prompt: "<p>Luego de apretar la tecla <i>espacio</i> gire la cabeza, fijando la mirada por encima del monitor, como muestra el video.</p>",
 })
 
 timeline.push({
-  type: jsPsychHtmlButtonResponse,
-  choices: ["continuar"],
-  stimulus: " ",
+  type: jsPsychHtmlKeyboardResponse,
+  choices: [" "],
+  stimulus: "Luego de girar la cabeza, presione espacio para continuar",
   extensions: [{ type: jsPsychExtensionWebgazer, params: { targets: [] } }],
   trial_duration: 20000,
 })
 
 timeline.push({
-  type: jsPsychVideoButtonResponse,
+  type: jsPsychVideoKeyboardResponse,
   stimulus: ['video/abajo.mp4'],
-  choices: ["continuar"],
-  prompt: "<p>Luego de apretar el boton <i>continuar</i> gire la cabeza mirando su ombligo como muestra el video.</p>",
+  choices: [" "],
+  prompt: "<p>Luego de apretar la tecla <i>espacio</i> gire la cabeza mirando su ombligo como muestra el video.</p>",
 })
 
 timeline.push({
-  type: jsPsychHtmlButtonResponse,
-  choices: ["continuar"],
-  stimulus: " ",
+  type: jsPsychHtmlKeyboardResponse,
+  choices: [" "],
+  stimulus: "Luego de girar la cabeza, presione espacio para continuar",
   extensions: [{ type: jsPsychExtensionWebgazer, params: { targets: [] } }],
   trial_duration: 20000,
 })
 
 timeline.push({
-  type: jsPsychVideoButtonResponse,
+  type: jsPsychVideoKeyboardResponse,
   stimulus: ['video/abajo2.mp4'],
-  choices: ["continuar"],
-  prompt: "<p>Luego de apretar el boton <i>continuar</i> gire la cabeza mirando su ombligo como muestra el video.</p>",
+  choices: [" "],
+  prompt: "<p>Luego de apretar la tecla <i>espacio</i> gire la cabeza mirando su ombligo como muestra el video.</p>",
 })
 
 timeline.push({
-  type: jsPsychHtmlButtonResponse,
-  choices: ["continuar"],
-  stimulus: " ",
+  type: jsPsychHtmlKeyboardResponse,
+  choices: [" "],
+  stimulus: "Luego de girar la cabeza, presione espacio para continuar",
   extensions: [{ type: jsPsychExtensionWebgazer, params: { targets: [] } }],
   trial_duration: 20000,
 })

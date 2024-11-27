@@ -5,6 +5,7 @@ const jsPsych = initJsPsych({
       'csv',
       `distance-experiment-expose-points${(new Date).toISOString()}.csv`
     );
+    window.location.href = "blink-experiment-2.html"
   },
   extensions: [{ type: jsPsychExtensionWebgazer }],
 });

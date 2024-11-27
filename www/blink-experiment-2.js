@@ -5,6 +5,7 @@ const jsPsych = initJsPsych({
       'csv',
       `blink-experiment-expose-points${(new Date).toISOString()}.csv`
     );
+    window.location.href = "rotation-experiment.html"
   },
   extensions: [{ type: jsPsychExtensionWebgazer }],
 });
@@ -65,7 +66,7 @@ timeline.push({
   </div>`,
   button_label: "continuar",
 });
-timeline.push({
+/*timeline.push({
   type: jsPsychVirtualChinrest,
   blindspot_reps: 3,
   viewing_distance_report: "Según tus respuestas, estás sentado aproximadamente a <span id='distance-estimate' style='font-weight: bold;'></span> de la pantalla. ¿Te parece correcto?",
@@ -77,7 +78,7 @@ timeline.push({
   adjustment_prompt: "Haz clic y arrastra la esquina inferior derecha de la imagen hasta que sea del mismo tamaño que una tarjeta de crédito sostenida frente a la pantalla. Puedes usar cualquier tarjeta que tenga el mismo tamaño que una tarjeta de crédito, como una tarjeta de membresía o una licencia de conducir. Si no tienes acceso a una tarjeta real, puedes usar una regla para medir el ancho de la imagen a 3.37 pulgadas o 85.6 mm.",
   resize_units: "none"
 });
-
+*/
 timeline.push(
   rastocJSPsych.ensureCalibration({
     performValidation: true,
