@@ -5,7 +5,7 @@ const jsPsych = initJsPsych({
       'csv',
       `all-experiment-expose-points${(new Date).toISOString()}.csv`
     );
-    window.location.href = "rotation-experiment.html"
+    window.location.href = "https://datapruebas.org/"
   },
   extensions: [{ type: jsPsychExtensionWebgazer }],
 });
@@ -77,8 +77,24 @@ timeline.push({
   redo_measurement_button_label: "No, eso no está cerca. Intentar de nuevo.",
   blindspot_prompt: "Ahora mediremos rápidamente a qué distancia estás sentado. Coloca tu mano izquierda en la barra espaciadora. Cubre tu ojo derecho con tu mano derecha. Con tu ojo izquierdo, enfócate en el cuadrado negro. Mantén tu enfoque en el cuadrado negro. La bola roja desaparecerá mientras se mueve de derecha a izquierda. Presiona la barra espaciadora tan pronto como la bola desaparezca. Presiona la barra espaciadora cuando estés listo para comenzar.",
   adjustment_button_prompt: "Haz clic aquí cuando la imagen tenga el tamaño correcto.",
-  adjustment_prompt: "<p>El experimento se repetira 3 veces (1/3).</p>Haz clic y arrastra la esquina inferior derecha de la imagen hasta que sea del mismo tamaño que una tarjeta de crédito sostenida frente a la pantalla. Puedes usar cualquier tarjeta que tenga el mismo tamaño que una tarjeta de crédito, como una tarjeta de membresía o una licencia de conducir. Si no tienes acceso a una tarjeta real, puedes usar una regla para medir el ancho de la imagen a 85.6 mm.",
+  adjustment_prompt: "<p>El experimento se repetira 3 veces (1/3).</p>Haz clic y arrastra <span style='color:red; font-weight: bold;'>la esquina inferior derecha de la imagen (indicada en color rojo)</span> hasta que sea del mismo tamaño que una tarjeta de crédito sostenida frente a la pantalla. Puedes usar cualquier tarjeta que tenga el mismo tamaño que una tarjeta de crédito, como una tarjeta de membresía o una licencia de conducir. Si no tienes acceso a una tarjeta real, puedes usar una regla para medir el ancho de la imagen a 8.5 cm.<br><br>",
   resize_units: "none",
+  item_path:"card.png",
+  extensions: [{ type: jsPsychExtensionWebgazer, params: { targets: [] } }]
+});
+
+timeline.push({
+  type: jsPsychVirtualChinrest,
+  blindspot_reps: 3,
+  viewing_distance_report: "Según tus respuestas, estás sentado aproximadamente a <span id='distance-estimate' style='font-weight: bold;'></span> de la pantalla. ¿Te parece correcto?",
+  blindspot_measurements_prompt: "Mediciones restantes.",
+  blindspot_done_prompt: "Si",
+  redo_measurement_button_label: "No, eso no está cerca. Intentar de nuevo.",
+  blindspot_prompt: "Ahora mediremos rápidamente a qué distancia estás sentado. Coloca tu mano izquierda en la barra espaciadora. Cubre tu ojo derecho con tu mano derecha. Con tu ojo izquierdo, enfócate en el cuadrado negro. Mantén tu enfoque en el cuadrado negro. La bola roja desaparecerá mientras se mueve de derecha a izquierda. Presiona la barra espaciadora tan pronto como la bola desaparezca. Presiona la barra espaciadora cuando estés listo para comenzar.",
+  adjustment_button_prompt: "Haz clic aquí cuando la imagen tenga el tamaño correcto.",
+  adjustment_prompt: "<p>El experimento se repetira 3 veces (2/3).</p>Haz clic y arrastra <span style='color:red; font-weight: bold;'>la esquina inferior derecha de la imagen (indicada en color rojo)</span> hasta que sea del mismo tamaño que una tarjeta de crédito sostenida frente a la pantalla. Puedes usar cualquier tarjeta que tenga el mismo tamaño que una tarjeta de crédito, como una tarjeta de membresía o una licencia de conducir. Si no tienes acceso a una tarjeta real, puedes usar una regla para medir el ancho de la imagen a 8.5 cm.<br><br>",
+  resize_units: "none",
+  item_path:"card.png",
   extensions: [{ type: jsPsychExtensionWebgazer, params: { targets: [] } }],
 });
 
@@ -91,22 +107,9 @@ timeline.push({
   redo_measurement_button_label: "No, eso no está cerca. Intentar de nuevo.",
   blindspot_prompt: "Ahora mediremos rápidamente a qué distancia estás sentado. Coloca tu mano izquierda en la barra espaciadora. Cubre tu ojo derecho con tu mano derecha. Con tu ojo izquierdo, enfócate en el cuadrado negro. Mantén tu enfoque en el cuadrado negro. La bola roja desaparecerá mientras se mueve de derecha a izquierda. Presiona la barra espaciadora tan pronto como la bola desaparezca. Presiona la barra espaciadora cuando estés listo para comenzar.",
   adjustment_button_prompt: "Haz clic aquí cuando la imagen tenga el tamaño correcto.",
-  adjustment_prompt: "<p>El experimento se repetira 3 veces (2/3).</p>Haz clic y arrastra la esquina inferior derecha de la imagen hasta que sea del mismo tamaño que una tarjeta de crédito sostenida frente a la pantalla. Puedes usar cualquier tarjeta que tenga el mismo tamaño que una tarjeta de crédito, como una tarjeta de membresía o una licencia de conducir. Si no tienes acceso a una tarjeta real, puedes usar una regla para medir el ancho de la imagen a 85.6 mm.",
+  adjustment_prompt: "<p>El experimento se repetira 3 veces (3/3).</p>Haz clic y arrastra <span style='color:red; font-weight: bold;'>la esquina inferior derecha de la imagen (indicada en color rojo)</span> hasta que sea del mismo tamaño que una tarjeta de crédito sostenida frente a la pantalla. Puedes usar cualquier tarjeta que tenga el mismo tamaño que una tarjeta de crédito, como una tarjeta de membresía o una licencia de conducir. Si no tienes acceso a una tarjeta real, puedes usar una regla para medir el ancho de la imagen a 8.5 cm.<br><br>",
   resize_units: "none",
-  extensions: [{ type: jsPsychExtensionWebgazer, params: { targets: [] } }],
-});
-
-timeline.push({
-  type: jsPsychVirtualChinrest,
-  blindspot_reps: 3,
-  viewing_distance_report: "Según tus respuestas, estás sentado aproximadamente a <span id='distance-estimate' style='font-weight: bold;'></span> de la pantalla. ¿Te parece correcto?",
-  blindspot_measurements_prompt: "Mediciones restantes.",
-  blindspot_done_prompt: "Si",
-  redo_measurement_button_label: "No, eso no está cerca. Intentar de nuevo.",
-  blindspot_prompt: "Ahora mediremos rápidamente a qué distancia estás sentado. Coloca tu mano izquierda en la barra espaciadora. Cubre tu ojo derecho con tu mano derecha. Con tu ojo izquierdo, enfócate en el cuadrado negro. Mantén tu enfoque en el cuadrado negro. La bola roja desaparecerá mientras se mueve de derecha a izquierda. Presiona la barra espaciadora tan pronto como la bola desaparezca. Presiona la barra espaciadora cuando estés listo para comenzar.",
-  adjustment_button_prompt: "Haz clic aquí cuando la imagen tenga el tamaño correcto.",
-  adjustment_prompt: "<p>El experimento se repetira 3 veces (3/3).</p>Haz clic y arrastra la esquina inferior derecha de la imagen hasta que sea del mismo tamaño que una tarjeta de crédito sostenida frente a la pantalla. Puedes usar cualquier tarjeta que tenga el mismo tamaño que una tarjeta de crédito, como una tarjeta de membresía o una licencia de conducir. Si no tienes acceso a una tarjeta real, puedes usar una regla para medir el ancho de la imagen a 85.6 mm.",
-  resize_units: "none",
+  item_path:"card.png",
   extensions: [{ type: jsPsychExtensionWebgazer, params: { targets: [] } }],
 });
 
@@ -288,7 +291,7 @@ timeline.push({
 
 timeline.push({
   type: jsPsychVideoKeyboardResponse,
-  stimulus: ['video/derecha_hombro.mp4'],
+  stimulus: ['derecha_hombro.mp4'],
   choices: [" "],
   prompt: "<p>Luego de apretar la tecla <i>espacio</i> gire la cabeza hacia su hombro derecho como muestra el video.</p>",
 })
@@ -303,7 +306,7 @@ timeline.push({
 
 timeline.push({
   type: jsPsychVideoKeyboardResponse,
-  stimulus: ['video/derecha.mp4'],
+  stimulus: ['derecha.mp4'],
   choices: [" "],
   prompt: "<p>Luego de apretar la tecla <i>espacio</i> gire la cabeza hacia la derecha, a medio camino entre mirar hacia el frente y hacia el hombro, como muestra el video.</p>",
 })
@@ -318,7 +321,7 @@ timeline.push({
 
 timeline.push({
   type: jsPsychVideoKeyboardResponse,
-  stimulus: ['video/izquierda_hombro.mp4'],
+  stimulus: ['izquierda_hombro.mp4'],
   choices: [" "],
   prompt: "<p>Luego de apretar la tecla <i>espacio</i> gire la cabeza hacia el hombro izquierdo como muestra el video.</p>",
 })
@@ -333,7 +336,7 @@ timeline.push({
 
 timeline.push({
   type: jsPsychVideoKeyboardResponse,
-  stimulus: ['video/izquierda.mp4'],
+  stimulus: ['izquierda.mp4'],
   choices: [" "],
   prompt: "<p>Luego de apretar la tecla <i>espacio</i> gire la cabeza hacia la izquierda, a medio camino entre mirar hacia el frente y hacia el hombro, como muestra el video.</p>",
 })
@@ -348,7 +351,7 @@ timeline.push({
 
 timeline.push({
   type: jsPsychVideoKeyboardResponse,
-  stimulus: ['video/arriba.mp4'],
+  stimulus: ['arriba.mp4'],
   choices: [" "],
   prompt: "<p>Luego de apretar la tecla <i>espacio</i> gire la cabeza mirando al techo como muestra el video.</p>",
 })
@@ -363,7 +366,7 @@ timeline.push({
 
 timeline.push({
   type: jsPsychVideoKeyboardResponse,
-  stimulus: ['video/arriba2.mp4'],
+  stimulus: ['arriba2.mp4'],
   choices: [" "],
   prompt: "<p>Luego de apretar la tecla <i>espacio</i> gire la cabeza, fijando la mirada por encima del monitor, como muestra el video.</p>",
 })
@@ -378,7 +381,7 @@ timeline.push({
 
 timeline.push({
   type: jsPsychVideoKeyboardResponse,
-  stimulus: ['video/abajo.mp4'],
+  stimulus: ['abajo.mp4'],
   choices: [" "],
   prompt: "<p>Luego de apretar la tecla <i>espacio</i> gire la cabeza mirando su ombligo como muestra el video.</p>",
 })
@@ -393,7 +396,7 @@ timeline.push({
 
 timeline.push({
   type: jsPsychVideoKeyboardResponse,
-  stimulus: ['video/abajo2.mp4'],
+  stimulus: ['abajo2.mp4'],
   choices: [" "],
   prompt: "<p>Luego de apretar la tecla <i>espacio</i> gire la cabeza mirando su ombligo como muestra el video.</p>",
 })
