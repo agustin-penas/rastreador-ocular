@@ -1,11 +1,50 @@
+
+const queryParams = new URLSearchParams(window.location.search);
+let run_id = queryParams.get('run-id');
+let redirect_url = "https://datapruebas.org"
+
+function getCookie(name) {
+  const value = `; ${document.cookie}`;
+  const parts = value.split(`; ${name}=`);
+  if (parts.length === 2) return parts.pop().split(';').shift();
+}
+
 const jsPsych = initJsPsych({
   on_finish: function () {
-    jsPsych.data.displayData();
-    jsPsych.data.get().localSave( // API: end-experiment
-      'csv',
-      `all-experiment-expose-points${(new Date).toISOString()}.csv`
-    );
-    window.location.href = "rotation-experiment.html"
+    experimentData = jsPsych.data.get().json()
+    
+    let url = `https://datapruebas.org/api/v1/record_data/${run_id}/`;
+    fetch(url, {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            "X-CSRFToken": getCookie("csrftoken"),
+        },
+        body: JSON.stringify({ "data": experimentData })
+      }).then(response => {
+        console.log(JSON.stringify(response));
+        // codigo se ejecuta con el fetch completado
+        fetch(`https://datapruebas.org/api/v1/end_run/${run_id}/`, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                "X-CSRFToken": getCookie("csrftoken"),
+                //'Authorization': 'Token <experiment token>'
+                
+              },
+              body: JSON.stringify({ "score": 0 })
+            }).then(response => {
+              document.body.innerHTML = '<p>Enviando datos, espere por favor ...</p>';
+              setTimeout(() => {
+                // Redirect or perform any other cleanup
+                window.location.href = redirect_url;
+              }, 5000);
+            })
+  
+    });
+  
   },
   extensions: [{ type: jsPsychExtensionWebgazer }],
 });
@@ -77,8 +116,9 @@ timeline.push({
   redo_measurement_button_label: "No, eso no está cerca. Intentar de nuevo.",
   blindspot_prompt: "Ahora mediremos rápidamente a qué distancia estás sentado. Coloca tu mano izquierda en la barra espaciadora. Cubre tu ojo derecho con tu mano derecha. Con tu ojo izquierdo, enfócate en el cuadrado negro. Mantén tu enfoque en el cuadrado negro. La bola roja desaparecerá mientras se mueve de derecha a izquierda. Presiona la barra espaciadora tan pronto como la bola desaparezca. Presiona la barra espaciadora cuando estés listo para comenzar.",
   adjustment_button_prompt: "Haz clic aquí cuando la imagen tenga el tamaño correcto.",
-  adjustment_prompt: "<p>El experimento se repetira 3 veces (1/3).</p>Haz clic y arrastra la esquina inferior derecha de la imagen hasta que sea del mismo tamaño que una tarjeta de crédito sostenida frente a la pantalla. Puedes usar cualquier tarjeta que tenga el mismo tamaño que una tarjeta de crédito, como una tarjeta de membresía o una licencia de conducir. Si no tienes acceso a una tarjeta real, puedes usar una regla para medir el ancho de la imagen a 85.6 mm.",
+  adjustment_prompt: "<p>El experimento se repetira 3 veces (1/3).</p>Haz clic y arrastra <span style='color:red; font-weight: bold;'>la esquina inferior derecha de la imagen (indicada en color rojo)</span> hasta que sea del mismo tamaño que una tarjeta de crédito sostenida frente a la pantalla. Puedes usar cualquier tarjeta que tenga el mismo tamaño que una tarjeta de crédito, como una tarjeta de membresía o una licencia de conducir. Si no tienes acceso a una tarjeta real, puedes usar una regla para medir el ancho de la imagen a 8.5 cm.<br><br>",
   resize_units: "none",
+  item_path:"card.png",
   extensions: [{ type: jsPsychExtensionWebgazer, params: { targets: [] } }],
 });
 
@@ -91,8 +131,9 @@ timeline.push({
   redo_measurement_button_label: "No, eso no está cerca. Intentar de nuevo.",
   blindspot_prompt: "Ahora mediremos rápidamente a qué distancia estás sentado. Coloca tu mano izquierda en la barra espaciadora. Cubre tu ojo derecho con tu mano derecha. Con tu ojo izquierdo, enfócate en el cuadrado negro. Mantén tu enfoque en el cuadrado negro. La bola roja desaparecerá mientras se mueve de derecha a izquierda. Presiona la barra espaciadora tan pronto como la bola desaparezca. Presiona la barra espaciadora cuando estés listo para comenzar.",
   adjustment_button_prompt: "Haz clic aquí cuando la imagen tenga el tamaño correcto.",
-  adjustment_prompt: "<p>El experimento se repetira 3 veces (2/3).</p>Haz clic y arrastra la esquina inferior derecha de la imagen hasta que sea del mismo tamaño que una tarjeta de crédito sostenida frente a la pantalla. Puedes usar cualquier tarjeta que tenga el mismo tamaño que una tarjeta de crédito, como una tarjeta de membresía o una licencia de conducir. Si no tienes acceso a una tarjeta real, puedes usar una regla para medir el ancho de la imagen a 85.6 mm.",
+  adjustment_prompt: "<p>El experimento se repetira 3 veces (2/3).</p>Haz clic y arrastra <span style='color:red; font-weight: bold;'>la esquina inferior derecha de la imagen (indicada en color rojo)</span> hasta que sea del mismo tamaño que una tarjeta de crédito sostenida frente a la pantalla. Puedes usar cualquier tarjeta que tenga el mismo tamaño que una tarjeta de crédito, como una tarjeta de membresía o una licencia de conducir. Si no tienes acceso a una tarjeta real, puedes usar una regla para medir el ancho de la imagen a 8.5 cm.<br><br>",
   resize_units: "none",
+  item_path:"card.png",
   extensions: [{ type: jsPsychExtensionWebgazer, params: { targets: [] } }],
 });
 
@@ -105,9 +146,27 @@ timeline.push({
   redo_measurement_button_label: "No, eso no está cerca. Intentar de nuevo.",
   blindspot_prompt: "Ahora mediremos rápidamente a qué distancia estás sentado. Coloca tu mano izquierda en la barra espaciadora. Cubre tu ojo derecho con tu mano derecha. Con tu ojo izquierdo, enfócate en el cuadrado negro. Mantén tu enfoque en el cuadrado negro. La bola roja desaparecerá mientras se mueve de derecha a izquierda. Presiona la barra espaciadora tan pronto como la bola desaparezca. Presiona la barra espaciadora cuando estés listo para comenzar.",
   adjustment_button_prompt: "Haz clic aquí cuando la imagen tenga el tamaño correcto.",
-  adjustment_prompt: "<p>El experimento se repetira 3 veces (3/3).</p>Haz clic y arrastra la esquina inferior derecha de la imagen hasta que sea del mismo tamaño que una tarjeta de crédito sostenida frente a la pantalla. Puedes usar cualquier tarjeta que tenga el mismo tamaño que una tarjeta de crédito, como una tarjeta de membresía o una licencia de conducir. Si no tienes acceso a una tarjeta real, puedes usar una regla para medir el ancho de la imagen a 85.6 mm.",
+  adjustment_prompt: "<p>El experimento se repetira 3 veces (3/3).</p>Haz clic y arrastra <span style='color:red; font-weight: bold;'>la esquina inferior derecha de la imagen (indicada en color rojo)</span> hasta que sea del mismo tamaño que una tarjeta de crédito sostenida frente a la pantalla. Puedes usar cualquier tarjeta que tenga el mismo tamaño que una tarjeta de crédito, como una tarjeta de membresía o una licencia de conducir. Si no tienes acceso a una tarjeta real, puedes usar una regla para medir el ancho de la imagen a 8.5 cm.<br><br>",
   resize_units: "none",
+  item_path:"card.png",
   extensions: [{ type: jsPsychExtensionWebgazer, params: { targets: [] } }],
+  on_finish: function(data){
+    console.log(data)
+    console.log("run_id:", run_id)
+    experimentData = jsPsych.data.get().json()
+    console.log(experimentData)
+
+    let url = `https://datapruebas.org/api/v1/record_data/${run_id}/`;
+    fetch(url, {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            "X-CSRFToken": getCookie("csrftoken"),
+        },
+        body: JSON.stringify({ "data": experimentData })
+    }).then(response => console.log(JSON.stringify(response)));
+  }
 });
 
 
@@ -201,9 +260,9 @@ timeline.push({
   stimulus: `
     <p>
     En el proximo experimento por favor fijá la mirada en el círculo y luego realizá las siguientes acciones:<br>
-      1. Cierre los ojos por 2 segundo.<br>
+      1. Cierre los ojos por 2 segundos.<br>
       2. Esperar 4 segundos.<br>
-      3. Cierre los ojos por 2 segundo.<br>
+      3. Cierre los ojos por 2 segundos.<br>
     Tiene 20 segundos, si termina antes puede apretar la tecla <i>espacio</i>.<br>
     Presione la tecla <i>espacio</i> para iniciar el experimento.<br>
     </p>
@@ -280,6 +339,23 @@ timeline.push({
   stimulus: dot_html,
   extensions: [{ type: jsPsychExtensionWebgazer, params: { targets: [] } }],
   trial_duration: trialDuration,
+  on_finish: function(data){
+    console.log(data)
+    console.log("run_id:", run_id)
+    experimentData = jsPsych.data.get().json()
+    console.log(experimentData)
+
+    let url = `https://datapruebas.org/api/v1/record_data/${run_id}/`;
+    fetch(url, {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            "X-CSRFToken": getCookie("csrftoken"),
+        },
+        body: JSON.stringify({ "data": experimentData })
+    }).then(response => console.log(JSON.stringify(response)));
+  }
 })
 
 
@@ -288,7 +364,7 @@ timeline.push({
 
 timeline.push({
   type: jsPsychVideoKeyboardResponse,
-  stimulus: ['video/derecha_hombro.mp4'],
+  stimulus: ['derecha_hombro.mp4'],
   choices: [" "],
   prompt: "<p>Luego de apretar la tecla <i>espacio</i> gire la cabeza hacia su hombro derecho como muestra el video.</p>",
 })
@@ -303,7 +379,7 @@ timeline.push({
 
 timeline.push({
   type: jsPsychVideoKeyboardResponse,
-  stimulus: ['video/derecha.mp4'],
+  stimulus: ['derecha.mp4'],
   choices: [" "],
   prompt: "<p>Luego de apretar la tecla <i>espacio</i> gire la cabeza hacia la derecha, a medio camino entre mirar hacia el frente y hacia el hombro, como muestra el video.</p>",
 })
@@ -318,7 +394,7 @@ timeline.push({
 
 timeline.push({
   type: jsPsychVideoKeyboardResponse,
-  stimulus: ['video/izquierda_hombro.mp4'],
+  stimulus: ['izquierda_hombro.mp4'],
   choices: [" "],
   prompt: "<p>Luego de apretar la tecla <i>espacio</i> gire la cabeza hacia el hombro izquierdo como muestra el video.</p>",
 })
@@ -333,7 +409,7 @@ timeline.push({
 
 timeline.push({
   type: jsPsychVideoKeyboardResponse,
-  stimulus: ['video/izquierda.mp4'],
+  stimulus: ['izquierda.mp4'],
   choices: [" "],
   prompt: "<p>Luego de apretar la tecla <i>espacio</i> gire la cabeza hacia la izquierda, a medio camino entre mirar hacia el frente y hacia el hombro, como muestra el video.</p>",
 })
@@ -348,7 +424,7 @@ timeline.push({
 
 timeline.push({
   type: jsPsychVideoKeyboardResponse,
-  stimulus: ['video/arriba.mp4'],
+  stimulus: ['arriba.mp4'],
   choices: [" "],
   prompt: "<p>Luego de apretar la tecla <i>espacio</i> gire la cabeza mirando al techo como muestra el video.</p>",
 })
@@ -363,7 +439,7 @@ timeline.push({
 
 timeline.push({
   type: jsPsychVideoKeyboardResponse,
-  stimulus: ['video/arriba2.mp4'],
+  stimulus: ['arriba2.mp4'],
   choices: [" "],
   prompt: "<p>Luego de apretar la tecla <i>espacio</i> gire la cabeza, fijando la mirada por encima del monitor, como muestra el video.</p>",
 })
@@ -378,7 +454,7 @@ timeline.push({
 
 timeline.push({
   type: jsPsychVideoKeyboardResponse,
-  stimulus: ['video/abajo.mp4'],
+  stimulus: ['abajo.mp4'],
   choices: [" "],
   prompt: "<p>Luego de apretar la tecla <i>espacio</i> gire la cabeza mirando su ombligo como muestra el video.</p>",
 })
@@ -393,7 +469,7 @@ timeline.push({
 
 timeline.push({
   type: jsPsychVideoKeyboardResponse,
-  stimulus: ['video/abajo2.mp4'],
+  stimulus: ['abajo2.mp4'],
   choices: [" "],
   prompt: "<p>Luego de apretar la tecla <i>espacio</i> gire la cabeza mirando su ombligo como muestra el video.</p>",
 })
@@ -404,8 +480,8 @@ timeline.push({
   stimulus: "Luego de girar la cabeza, presione espacio para continuar",
   extensions: [{ type: jsPsychExtensionWebgazer, params: { targets: [] } }],
   trial_duration: 20000,
-})
 
+})
 timeline.push({
   type: jsPsychHtmlKeyboardResponse,
   stimulus: `
@@ -417,6 +493,7 @@ timeline.push({
     `,
   choices: [" "],
 })
+
 timeline.push({ type: rastocJSPsych.EventsTrackingStop });
 
 // Start the experiment
