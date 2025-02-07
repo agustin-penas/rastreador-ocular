@@ -96,7 +96,7 @@ timeline.push({
   instructions: `
   <div style="left: calc(50% - 400px); width:800px;">
     <p>
-      Corregí la posición de la webcam para que se alinie con tus ojos y estos
+      Corregí la posición de la webcam para que se alinee con tus ojos y estos
       queden bien enfocados. Tu cabeza debería quedar en el centro del
       recuadro que aparece acá arriba.
       <br>
