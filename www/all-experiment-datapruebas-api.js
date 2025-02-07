@@ -37,7 +37,7 @@ async function finalizeExperiment() {
           throw new Error(`Failed to record data. Status: ${recordResponse.status}`);
       }
 
-      console.log("? Data recorded successfully.");
+      console.log("Data recorded successfully.");
 
       // Step 2: End the experiment (only if Step 1 succeeded)
       let endResponse = await fetch(endRunUrl, {
@@ -54,15 +54,15 @@ async function finalizeExperiment() {
           throw new Error(`Failed to end experiment. Status: ${endResponse.status}`);
       }
 
-      console.log("? Experiment successfully ended.");
+      console.log("Experiment successfully ended.");
 
       // Step 3: Redirect after confirmation
       document.body.innerHTML = '<p>Enviando datos, espere por favor ...</p>';
       setTimeout(() => window.location.href = redirect_url, 5000);
 
   } catch (error) {
-      console.error("? Error during experiment finalization:", error);
-      alert("Ocurri? un error guardando los datos. Por favor, verifica tu conexi?n e int?ntalo nuevamente.");
+      console.error("Error during experiment finalization:", error);
+      alert("Ocurrió un error guardando los datos. Por favor, verifica tu conexión e inténtalo nuevamente.");
   }
 }
 
@@ -125,7 +125,7 @@ timeline.push({
       Para evitar distracciones te pedimos también que durante el experimento cierres aplicaciones que
       generen notificaciones y pongas el teléfono en modo "no molestar".
       <br>
-      Adem??s vamos a cambiar a pantalla completa.
+      Además vamos a cambiar a pantalla completa.
     </p>
   </div>`,
   button_label: "continuar",
@@ -149,7 +149,7 @@ timeline.push({
 timeline.push({
   type: jsPsychVirtualChinrest,
   blindspot_reps: 3,
-  viewing_distance_report: "Seg??n tus respuestas, est??s sentado aproximadamente a <span id='distance-estimate' style='font-weight: bold;'></span> de la pantalla. ??Te parece correcto?",
+  viewing_distance_report: "Según tus respuestas, estás sentado aproximadamente a <span id='distance-estimate' style='font-weight: bold;'></span> de la pantalla ¿Te parece correcto?",
   blindspot_measurements_prompt: "Mediciones restantes.",
   blindspot_done_prompt: "Si",
   redo_measurement_button_label: "No, eso no está cerca. Intentar de nuevo.",
@@ -164,7 +164,7 @@ timeline.push({
 timeline.push({
   type: jsPsychVirtualChinrest,
   blindspot_reps: 3,
-  viewing_distance_report: "Seg??n tus respuestas, est??s sentado aproximadamente a <span id='distance-estimate' style='font-weight: bold;'></span> de la pantalla. ??Te parece correcto?",
+  viewing_distance_report: "Según tus respuestas, estás sentado aproximadamente a <span id='distance-estimate' style='font-weight: bold;'></span> de la pantalla ¿Te parece correcto?",
   blindspot_measurements_prompt: "Mediciones restantes.",
   blindspot_done_prompt: "Si",
   redo_measurement_button_label: "No, eso no está cerca. Intentar de nuevo.",
@@ -196,23 +196,7 @@ timeline.push({
 
 //***************************** */
 // EMPIEZAN BLINK
-/**
-timeline.push({
-  type: jsPsychFullscreen,
-  message: `
-  <div style="left: calc(50% - 400px); width:800px;">
-    <h2>Intro</h2>
-    <p>
-      Para evitar distracciones te pedimos tambi??n que en la medida de lo
-      posible durante la duraci??n del experimento cierres aplicaciones que
-      generen notificaciones y pongas el tel??fono en modo no molestar.
-      <br>
-      Adem??s vamos a cambiar a pantalla completa.
-    </p>
-  </div>`,
-  button_label: "continuar",
-});
-*/
+
 timeline.push(
   rastocJSPsych.ensureCalibration({
     performValidation: true,
