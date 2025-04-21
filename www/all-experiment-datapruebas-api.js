@@ -23,6 +23,10 @@ async function finalizeExperiment() {
 
   try {
       // Step 1: Record experiment data
+      experimentData = jsPsych.data.get().json()
+
+      console.log("Tamaño del JSON:", experimentData.length, "caracteres (~", (experimentData.length / 1024).toFixed(1), "KB )");
+
       let recordResponse = await fetch(recordDataUrl, {
           method: 'POST',
           headers: {
@@ -30,7 +34,8 @@ async function finalizeExperiment() {
               "Content-Type": "application/json",
               "X-CSRFToken": getCookie("csrftoken"),
           },
-          body: JSON.stringify({ "data": jsPsych.data.get().json() })
+          
+          body: JSON.stringify({ "data": experimentData })
       });
 
       if (!recordResponse.ok) {
@@ -58,7 +63,7 @@ async function finalizeExperiment() {
 
       // Step 3: Redirect after confirmation
       document.body.innerHTML = '<p>Enviando datos, espere por favor ...</p>';
-      setTimeout(() => window.location.href = redirect_url, 5000);
+      setTimeout(() => window.location.href = redirect_url, 5000); 
 
   } catch (error) {
       console.error("Error during experiment finalization:", error);
@@ -178,18 +183,19 @@ timeline.push({
     console.log(data)
     console.log("run_id:", run_id)
     experimentData = jsPsych.data.get().json()
-    console.log(experimentData)
+    console.log("Tamaño del JSON:", experimentData.length, "caracteres (~", (experimentData.length / 1024).toFixed(1), "KB )");
 
-    let url = `https://datapruebas.org/dj/api/v1/record_data/${run_id}/`;
-    fetch(url, {
-        method: 'POST',
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-            "X-CSRFToken": getCookie("csrftoken"),
-        },
-        body: JSON.stringify({ "data": experimentData })
-    }).then(response => console.log(JSON.stringify(response)));
+
+    // let url = `https://datapruebas.org/dj/api/v1/record_data/${run_id}/`;
+    // fetch(url, {
+    //     method: 'POST',
+    //     headers: {
+    //         'Accept': 'application/json',
+    //         'Content-Type': 'application/json',
+    //         "X-CSRFToken": getCookie("csrftoken"),
+    //     },
+    //     body: JSON.stringify({ "data": experimentData })
+    // }).then(response => console.log(JSON.stringify(response)));
   }
 });
 
@@ -351,18 +357,18 @@ timeline.push({
     console.log(data)
     console.log("run_id:", run_id)
     experimentData = jsPsych.data.get().json()
-    console.log(experimentData)
+    console.log("Tamaño del JSON:", experimentData.length, "caracteres (~", (experimentData.length / 1024).toFixed(1), "KB )");
 
-    let url = `https://datapruebas.org/dj/api/v1/record_data/${run_id}/`;
-    fetch(url, {
-        method: 'POST',
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-            "X-CSRFToken": getCookie("csrftoken"),
-        },
-        body: JSON.stringify({ "data": experimentData })
-    }).then(response => console.log(JSON.stringify(response)));
+    // let url = `https://datapruebas.org/dj/api/v1/record_data/${run_id}/`;
+    // fetch(url, {
+    //     method: 'POST',
+    //     headers: {
+    //         'Accept': 'application/json',
+    //         'Content-Type': 'application/json',
+    //         "X-CSRFToken": getCookie("csrftoken"),
+    //     },
+    //     body: JSON.stringify({ "data": experimentData })
+    // }).then(response => console.log(JSON.stringify(response)));
   }
 })
 
@@ -434,7 +440,7 @@ timeline.push({
   type: jsPsychVideoKeyboardResponse,
   stimulus: ['arriba.mp4'],
   choices: [" "],
-  prompt: "<p>Luego de apretar la tecla <i>espacio</i> girá la cabeza mirando al techo como muestra el video.</p>",
+  prompt: "<p>Luego de apretar la tecla <i>espacio</i> suba la cabeza mirando al techo como muestra el video.</p>",
 })
 
 timeline.push({
@@ -449,7 +455,7 @@ timeline.push({
   type: jsPsychVideoKeyboardResponse,
   stimulus: ['arriba2.mp4'],
   choices: [" "],
-  prompt: "<p>Luego de apretar la tecla <i>espacio</i> girá la cabeza, fijando la mirada por encima del monitor, como muestra el video.</p>",
+  prompt: "<p>Luego de apretar la tecla <i>espacio</i> suba la cabeza levemente, fijando la mirada por encima del monitor, como muestra el video.</p>",
 })
 
 timeline.push({
@@ -464,7 +470,7 @@ timeline.push({
   type: jsPsychVideoKeyboardResponse,
   stimulus: ['abajo.mp4'],
   choices: [" "],
-  prompt: "<p>Luego de apretar la tecla <i>espacio</i> girá la cabeza mirando su ombligo como muestra el video.</p>",
+  prompt: "<p>Luego de apretar la tecla <i>espacio</i> baje la cabeza mirando su ombligo como muestra el video.</p>",
 })
 
 timeline.push({
@@ -479,7 +485,7 @@ timeline.push({
   type: jsPsychVideoKeyboardResponse,
   stimulus: ['abajo2.mp4'],
   choices: [" "],
-  prompt: "<p>Luego de apretar la tecla <i>espacio</i> girá la cabeza mirando su ombligo como muestra el video.</p>",
+  prompt: "<p>Luego de apretar la tecla <i>espacio</i> baje la cabeza levemente, fijando la mirada por encima del monitor, como muestra el video.</p>",
 })
 
 timeline.push({
