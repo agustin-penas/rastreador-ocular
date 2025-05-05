@@ -354,21 +354,17 @@ timeline.push({
   extensions: [{ type: jsPsychExtensionWebgazer, params: { targets: [] } }],
   trial_duration: trialDuration,
   on_finish: function(data){
-    console.log(data)
-    console.log("run_id:", run_id)
     experimentData = jsPsych.data.get().json()
-    console.log("Tamaño del JSON:", experimentData.length, "caracteres (~", (experimentData.length / 1024).toFixed(1), "KB )");
-
-    // let url = `https://datapruebas.org/dj/api/v1/record_data/${run_id}/`;
-    // fetch(url, {
-    //     method: 'POST',
-    //     headers: {
-    //         'Accept': 'application/json',
-    //         'Content-Type': 'application/json',
-    //         "X-CSRFToken": getCookie("csrftoken"),
-    //     },
-    //     body: JSON.stringify({ "data": experimentData })
-    // }).then(response => console.log(JSON.stringify(response)));
+    let url = `https://datapruebas.org/dj/api/v1/record_data/${run_id}/`;
+    fetch(url, {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            "X-CSRFToken": getCookie("csrftoken"),
+        },
+        body: JSON.stringify({ "data": experimentData })
+    }).then(response => console.log(JSON.stringify(response)));
   }
 })
 
@@ -470,7 +466,7 @@ timeline.push({
   type: jsPsychVideoKeyboardResponse,
   stimulus: ['abajo.mp4'],
   choices: [" "],
-  prompt: "<p>Luego de apretar la tecla <i>espacio</i> baje la cabeza mirando su ombligo como muestra el video.</p>",
+  prompt: "<p>Luego de apretar la tecla <i>espacio</i> baje la cabeza mirando a su ombligo como muestra el video.</p>",
 })
 
 timeline.push({
